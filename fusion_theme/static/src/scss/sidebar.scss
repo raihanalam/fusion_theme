@@ -1,0 +1,472 @@
+// =============================================================================
+// Fusion Theme - apps sidebar
+// A dark, glassy rail. Inactive apps are quiet glass tiles with a tinted glyph;
+// only the active app is lit with a filled gradient tile and a coral marker.
+// Structure is rendered by static/src/xml/sidebar.xml.
+// =============================================================================
+
+// Page offset: the sidebar is fixed, so the web client leaves room for it.
+body.fx-has-sidebar {
+    --fx-side-w: var(--fx-side-w-expanded);
+}
+body.fx-has-sidebar.fx-sidebar-collapsed {
+    --fx-side-w: var(--fx-side-w-collapsed);
+}
+body.o_web_client.fx-has-sidebar {
+    padding-left: var(--fx-side-w);
+    transition: padding-left .26s var(--fx-ease);
+}
+
+.fx-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1010;
+    display: flex;
+    flex-direction: column;
+    width: var(--fx-side-w);
+    color: rgba(255, 255, 255, .8);
+    background:
+        radial-gradient(120% 55% at 0% 0%, color-mix(in srgb, var(--fx-primary) 42%, var(--fx-side-bg)) 0%, var(--fx-side-bg) 60%),
+        var(--fx-side-bg);
+    transition: width .26s var(--fx-ease);
+    overflow: hidden;
+
+    // ---------------------------------------------------------- Header -----
+    .fx-side-head {
+        flex: none;
+        display: flex;
+        align-items: center;
+        height: var(--fx-navbar-h);
+        padding: 0 20px;
+    }
+    .fx-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        color: #fff;
+        text-decoration: none;
+        border-radius: var(--fx-radius);
+    }
+    .fx-brand-logo {
+        display: flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 10px;
+        border-radius: var(--fx-radius);
+        background: #fff;
+        min-width: 0;
+
+        img {
+            display: block;
+            max-height: 22px;
+            max-width: 130px;
+            width: auto;
+            object-fit: contain;
+        }
+    }
+
+    // ---------------------------------------------------------- Search -----
+    .fx-side-search {
+        position: relative;
+        flex: none;
+        margin: 8px 16px 6px;
+
+        .fa-search {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13px;
+            color: rgba(255, 255, 255, .5);
+            pointer-events: none;
+        }
+        input {
+            width: 100%;
+            height: 36px;
+            padding: 0 12px 0 34px;
+            color: #fff;
+            font-size: 13.5px;
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .09);
+            border-radius: var(--fx-radius);
+            outline: none;
+            transition: background-color var(--fx-dur) var(--fx-ease), border-color var(--fx-dur) var(--fx-ease);
+
+            &::placeholder {
+                color: rgba(255, 255, 255, .48);
+            }
+            &:hover {
+                background: rgba(255, 255, 255, .1);
+            }
+            &:focus {
+                background: rgba(255, 255, 255, .12);
+                border-color: rgba(255, 255, 255, .4);
+                box-shadow: none;
+            }
+        }
+    }
+
+    // ------------------------------------------------------------ List -----
+    .fx-side-nav {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-bottom: 12px;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    .fx-side-label {
+        margin: 0;
+        padding: 14px 26px 6px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: .01em;
+        color: rgba(255, 255, 255, .5);
+    }
+    .fx-side-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .fx-side-empty {
+        padding: 18px 26px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, .55);
+    }
+
+    .fx-app-item {
+        position: relative;
+        margin: 2px 12px;
+    }
+    .fx-app {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 36px 6px 6px;
+        border-radius: 12px;
+        color: rgba(255, 255, 255, .78);
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background-color var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease);
+
+        &:hover {
+            background: rgba(255, 255, 255, .07);
+            color: #fff;
+        }
+        &:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: -2px;
+        }
+    }
+    .fx-app-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    // App tile. --t-fg / --t-a / --t-b are set per app from JS (hue based).
+    .fx-tile {
+        flex: none;
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--t-fg, #fff);
+        background: rgba(255, 255, 255, .07);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07);
+        transition: background var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease),
+                    box-shadow var(--fx-dur) var(--fx-ease), transform var(--fx-dur) var(--fx-ease);
+
+        img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+    }
+    .fx-app:hover .fx-tile {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, .12);
+    }
+
+    // The one lit element: the active app.
+    .fx-app-item.is-active {
+        &::before {
+            content: "";
+            position: absolute;
+            left: -12px;
+            top: 9px;
+            bottom: 9px;
+            width: 4px;
+            border-radius: 0 4px 4px 0;
+            background: var(--fx-highlight);
+        }
+        .fx-app {
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+        }
+        .fx-tile {
+            color: #fff;
+            background: linear-gradient(145deg, var(--t-a, var(--fx-primary)), var(--t-b, var(--fx-primary-hover)));
+            box-shadow: 0 8px 18px -6px var(--t-a, var(--fx-primary)), inset 0 0 0 1px rgba(255, 255, 255, .22);
+        }
+    }
+
+    // Pin button
+    .fx-pin {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        display: grid;
+        place-items: center;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: rgba(255, 255, 255, .6);
+        font-size: 12px;
+        opacity: 0;
+        transform: translateY(-50%);
+        transition: opacity var(--fx-dur) var(--fx-ease), background-color var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease);
+
+        &:hover {
+            background: rgba(255, 255, 255, .14);
+            color: #fff;
+        }
+        &:focus-visible {
+            opacity: 1;
+            outline: 2px solid #fff;
+            outline-offset: -2px;
+        }
+    }
+    .fx-app-item:hover .fx-pin {
+        opacity: 1;
+    }
+    .fx-app-item.is-pinned .fx-pin {
+        opacity: .95;
+        color: var(--fx-highlight);
+    }
+
+    // ---------------------------------------------------------- Footer -----
+    .fx-side-foot {
+        flex: none;
+        padding: 10px 12px 14px;
+        border-top: 1px solid rgba(255, 255, 255, .08);
+    }
+    .fx-collapse {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 6px;
+        border: 0;
+        border-radius: 12px;
+        background: transparent;
+        color: rgba(255, 255, 255, .7);
+        font-size: 13.5px;
+        font-weight: 500;
+        text-align: left;
+        transition: background-color var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease);
+
+        &:hover {
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+        }
+        .fx-collapse-icon {
+            flex: none;
+            display: grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .06);
+
+            i {
+                transition: transform .26s var(--fx-ease);
+            }
+        }
+    }
+
+    // ------------------------------------------------------- Collapsed -----
+    &.is-collapsed {
+        .fx-side-head {
+            justify-content: center;
+            padding: 0;
+        }
+        .fx-side-search,
+        .fx-app-name,
+        .fx-pin,
+        .fx-collapse-label,
+        .fx-side-empty {
+            display: none;
+        }
+        .fx-brand-logo {
+            padding: 0 6px;
+
+            img {
+                max-width: 40px;
+            }
+        }
+        .fx-side-label {
+            height: 1px;
+            margin: 10px 20px;
+            padding: 0;
+            overflow: hidden;
+            font-size: 0;
+            background: rgba(255, 255, 255, .1);
+        }
+        .fx-app-item {
+            margin: 2px 0;
+        }
+        .fx-app {
+            justify-content: center;
+            padding: 6px 0;
+        }
+        .fx-app-item.is-active::before {
+            left: 0;
+        }
+        .fx-collapse {
+            justify-content: center;
+            padding: 6px 0;
+        }
+        .fx-collapse .fx-collapse-icon i {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+// In dark mode the rail gets a hairline so it separates from the page.
+html[data-fx-mode="dark"] .fx-sidebar {
+    border-right: 1px solid var(--fx-border);
+}
+
+// Printing: no sidebar, no page offset.
+@media print {
+    .fx-sidebar {
+        display: none;
+    }
+    body.o_web_client.fx-has-sidebar {
+        padding-left: 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// App tiles: stock app icons fill the tile; apps without an icon get a letter
+// on a hue derived from the app name.
+// -----------------------------------------------------------------------------
+.fx-sidebar .fx-tile {
+    overflow: hidden;
+    background: transparent;
+    box-shadow: none;
+}
+.fx-sidebar .fx-tile img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.fx-sidebar .fx-tile.is-letter {
+    background: linear-gradient(145deg, var(--t-a, var(--fx-primary)), var(--t-b, var(--fx-primary-hover)));
+    color: #fff;
+}
+.fx-sidebar .fx-app:hover .fx-tile {
+    background: transparent;
+}
+.fx-sidebar .fx-app:hover .fx-tile.is-letter {
+    background: linear-gradient(145deg, var(--t-a, var(--fx-primary)), var(--t-b, var(--fx-primary-hover)));
+}
+.fx-sidebar .fx-app-item.is-active .fx-tile {
+    background: transparent;
+    overflow: visible;
+    box-shadow: 0 0 0 2px #fff, 0 8px 18px -6px var(--t-a, var(--fx-primary));
+}
+.fx-sidebar .fx-app-item.is-active .fx-tile.is-letter {
+    background: linear-gradient(145deg, var(--t-a, var(--fx-primary)), var(--t-b, var(--fx-primary-hover)));
+}
+
+// -----------------------------------------------------------------------------
+// Menu icon styles (Settings > Fusion Theme > Menu icon style)
+//   original - stock Odoo icons exactly as they are
+//   outline  - line icons, no tile
+//   tile     - line icons on a colored tile
+//   text     - names only (a letter when the sidebar is collapsed)
+// -----------------------------------------------------------------------------
+.fx-sidebar .fx-glyph {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+// original: nothing is cropped, tinted or outlined
+.fx-sidebar .fx-tile img {
+    border-radius: 0;
+    object-fit: contain;
+}
+html[data-fx-icons="original"] .fx-sidebar .fx-app-item.is-active .fx-tile {
+    box-shadow: none;
+}
+
+// outline
+html[data-fx-icons="outline"] .fx-sidebar .fx-tile {
+    color: rgba(255, 255, 255, .82);
+    background: transparent;
+    box-shadow: none;
+}
+html[data-fx-icons="outline"] .fx-sidebar .fx-app:hover .fx-tile {
+    color: #fff;
+    background: transparent;
+}
+html[data-fx-icons="outline"] .fx-sidebar .fx-app-item.is-active .fx-tile {
+    color: #fff;
+    background: transparent;
+    box-shadow: none;
+}
+
+// tile
+html[data-fx-icons="tile"] .fx-sidebar .fx-tile {
+    color: #fff;
+    background: linear-gradient(145deg, var(--t-a, var(--fx-primary)), var(--t-b, var(--fx-primary-hover)));
+}
+html[data-fx-icons="tile"] .fx-sidebar .fx-app:hover .fx-tile {
+    background: linear-gradient(145deg, var(--t-a, var(--fx-primary)), var(--t-b, var(--fx-primary-hover)));
+}
+html[data-fx-icons="tile"] .fx-sidebar .fx-glyph {
+    width: 20px;
+    height: 20px;
+}
+html[data-fx-icons="tile"] .fx-sidebar .fx-app-item.is-active .fx-tile {
+    background: linear-gradient(145deg, var(--t-a, var(--fx-primary)), var(--t-b, var(--fx-primary-hover)));
+    box-shadow: 0 0 0 2px #fff, 0 8px 18px -6px var(--t-a, var(--fx-primary));
+}
+
+// text only
+html[data-fx-icons="text"] .fx-sidebar:not(.is-collapsed) .fx-tile {
+    display: none;
+}
+html[data-fx-icons="text"] .fx-sidebar:not(.is-collapsed) .fx-app {
+    padding-left: 14px;
+    min-height: 40px;
+}
+html[data-fx-icons="text"] .fx-sidebar .fx-tile.is-letter,
+html[data-fx-icons="text"] .fx-sidebar .fx-app:hover .fx-tile.is-letter,
+html[data-fx-icons="text"] .fx-sidebar .fx-app-item.is-active .fx-tile.is-letter {
+    background: rgba(255, 255, 255, .1);
+    box-shadow: none;
+}

@@ -1,0 +1,315 @@
+// =============================================================================
+// Fusion Theme - form view
+// Covers the visual states of a record: editable vs read-only, unsaved changes,
+// required / invalid fields, the stage stepper in the status bar, ribbons and
+// smart buttons.
+// =============================================================================
+
+// ------------------------------------------------------------- Layout -------
+.o_form_view {
+    --formView-sheet-border-radius-md: calc(var(--fx-radius-lg) + 4px);
+    --formView-sheet-border-width-md: 1px;
+    --formView-sheet-padding-x-lg: 32px;
+    --formView-sheet-padding-y-lg: 28px;
+    --formView-sheet-padding-x-xxl: 36px;
+    --formView-sheet-padding-y-xxl: 30px;
+    --fieldWidget-margin-bottom: var(--fx-field-gap);
+}
+
+// Form width (Settings > Fusion Theme > Form view width)
+html[data-fx-form-width="full"] .o_form_view .o_form_sheet_bg {
+    max-width: none;
+}
+.o_form_view .o_form_sheet_bg {
+    background-color: var(--fx-bg);
+    border-color: var(--fx-border);
+}
+.o_form_view .o_form_sheet {
+    background-color: var(--fx-surface);
+    border-color: var(--fx-border);
+    border-radius: calc(var(--fx-radius-lg) + 4px);
+    box-shadow: 0 10px 30px rgba(20, 32, 43, .06), 0 1px 3px rgba(20, 32, 43, .05);
+    transition: box-shadow var(--fx-dur) var(--fx-ease);
+}
+
+// State cue: an editable record shows an accent edge on top of the sheet,
+// a read-only record stays flat and calm.
+.o_form_view.o_form_editable .o_form_sheet {
+    box-shadow: inset 0 3px 0 0 var(--fx-primary), 0 10px 30px rgba(20, 32, 43, .06);
+}
+
+// Labels and group titles
+.o_form_view .o_form_label {
+    color: var(--fx-text-muted);
+    font-weight: 500;
+}
+.o_form_view .o_form_label.o_form_label_readonly,
+.o_form_view .o_form_label.o_form_label_empty {
+    color: var(--fx-text-faint);
+}
+.o_form_view .o_horizontal_separator {
+    margin-top: 1.4rem;
+    padding-bottom: 6px;
+    color: var(--fx-text);
+    font-size: .95rem;
+    font-weight: 650;
+    letter-spacing: -.005em;
+    text-transform: none;
+    border-bottom: 1px solid var(--fx-border);
+}
+.o_form_view .oe_title h1,
+.o_form_view .oe_title .h1 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -.025em;
+}
+
+// Read-only values should look like content, not like disabled inputs.
+.o_form_view .o_form_readonly .o_field_widget:not(.o_field_boolean) {
+    color: var(--fx-text);
+}
+.o_form_view .o_form_uri,
+.o_form_view .o_form_uri > span:first-child {
+    color: var(--fx-primary-ink);
+}
+
+// ---------------------------------------------- Status bar (stage stepper) --
+// Circle stepper: completed stages are filled with a check mark, the current
+// stage is a ringed dot, upcoming stages are empty circles, joined by a line.
+// DOM order inside the status bar is reversed (row-reverse), so the stages the
+// record already passed are the siblings AFTER the current one.
+.o_form_view .o_form_statusbar {
+    align-items: flex-start;
+    background-color: var(--fx-surface);
+    border-bottom: 1px solid var(--fx-border);
+    padding-top: 12px;
+    padding-bottom: 10px;
+}
+.o_form_statusbar .o_statusbar_buttons .btn {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.o_field_statusbar > .o_statusbar_status {
+    --o-statusbar-radius: 0;
+    gap: 0;
+    align-items: flex-start;
+}
+
+.o_field_statusbar > .o_statusbar_status > .o_arrow_button:not(.d-none):not(.dropdown-toggle) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 116px;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0 6px 2px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    clip-path: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--fx-text-faint);
+    font-size: .8125rem;
+    font-weight: 500;
+    line-height: 1.25;
+    text-align: center;
+    white-space: normal;
+    transition: color var(--fx-dur) var(--fx-ease);
+
+    // The circle
+    &::before {
+        content: "";
+        position: static !important;
+        inset: auto !important;
+        display: block;
+        box-sizing: border-box;
+        flex: none;
+        width: 28px;
+        height: 28px;
+        margin-bottom: 8px;
+        border: 2px solid var(--fx-border-strong);
+        border-radius: 50% !important;
+        clip-path: none !important;
+        background: var(--fx-surface) !important;
+        color: var(--fx-on-primary);
+        font: 600 12px/24px FontAwesome;
+        text-align: center;
+        transition: border-color var(--fx-dur) var(--fx-ease), background-color var(--fx-dur) var(--fx-ease);
+    }
+
+    // The line to the previous stage
+    &::after {
+        content: "";
+        position: absolute;
+        top: 13px;
+        right: calc(50% + 18px);
+        width: calc(100% - 36px);
+        height: 2px;
+        border-radius: 2px;
+        background: var(--fx-border-strong);
+        transition: background-color var(--fx-dur) var(--fx-ease);
+    }
+    &.o_last::after {
+        display: none;
+    }
+
+    // Upcoming stages are clickable: hint it on hover
+    &:not(:disabled):hover {
+        color: var(--fx-primary-ink);
+    }
+    &:not(:disabled):hover::before {
+        border-color: var(--fx-primary);
+    }
+    &:disabled:not(.o_arrow_button_current) {
+        color: var(--fx-text-faint);
+    }
+}
+
+// Completed stages: filled circle with a check, strong line
+.o_field_statusbar > .o_statusbar_status > .o_arrow_button.o_arrow_button_current ~ .o_arrow_button:not(.dropdown-toggle):not(.d-none) {
+    color: var(--fx-text-muted);
+
+    &::before {
+        content: "\f00c";
+        border-color: var(--fx-primary);
+        background: var(--fx-primary) !important;
+    }
+    &::after {
+        background: var(--fx-primary);
+    }
+}
+
+// Current stage: ringed dot, bold label, line leading up to it
+.o_field_statusbar > .o_statusbar_status > .o_arrow_button.o_arrow_button_current:not(.dropdown-toggle):not(.d-none) {
+    color: var(--fx-text) !important;
+    font-weight: 700;
+    opacity: 1;
+
+    &::before {
+        border-color: var(--fx-primary);
+        background: radial-gradient(circle, var(--fx-primary) 0, var(--fx-primary) 5px, var(--fx-surface) 6px) !important;
+        box-shadow: 0 0 0 4px rgba(var(--fx-primary-rgb), .16);
+    }
+    &::after {
+        background: var(--fx-primary);
+    }
+}
+
+// Folded stages ("...") and the small-screen selector keep a simple pill look
+.o_field_statusbar > .o_statusbar_status > .dropdown-toggle {
+    align-self: flex-start;
+    margin: 0 4px !important;
+    padding: 4px 12px !important;
+    border: 0 !important;
+    border-radius: var(--fx-radius-pill) !important;
+    clip-path: none !important;
+    background: var(--fx-surface-3) !important;
+    color: var(--fx-text) !important;
+
+    &::before,
+    &::after {
+        display: none !important;
+    }
+    &:hover {
+        background: var(--fx-primary-soft-2) !important;
+        color: var(--fx-primary-ink) !important;
+    }
+}
+
+// ------------------------------------------------------ Smart buttons -------
+.o_form_view .oe_button_box {
+    gap: 8px;
+    padding-bottom: 6px;
+}
+.o_form_view .oe_button_box .oe_stat_button {
+    background-color: var(--fx-surface);
+    border: 1px solid var(--fx-border);
+    border-radius: var(--fx-radius);
+    color: var(--fx-text);
+    box-shadow: var(--fx-shadow-sm);
+    transition: border-color var(--fx-dur) var(--fx-ease), background-color var(--fx-dur) var(--fx-ease),
+                box-shadow var(--fx-dur) var(--fx-ease), transform var(--fx-dur) var(--fx-ease);
+
+    &:hover {
+        background-color: var(--fx-primary-soft);
+        border-color: rgba(var(--fx-primary-rgb), .5);
+        box-shadow: var(--fx-shadow-md);
+        transform: translateY(-1px);
+    }
+    .o_button_icon,
+    .fa {
+        color: var(--fx-primary-ink);
+    }
+    .o_stat_value {
+        font-weight: 700;
+        color: var(--fx-text);
+    }
+    .o_stat_text,
+    .o_stat_info .o_text_overflow {
+        color: var(--fx-text-muted);
+        font-size: .7rem;
+        font-weight: 600;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+}
+
+// ------------------------------------------------------------ Ribbons -------
+.o_widget_web_ribbon .ribbon span {
+    box-shadow: var(--fx-shadow-sm);
+    font-weight: 650;
+    letter-spacing: .02em;
+}
+
+// -------------------------------------------------- Unsaved-changes bar -----
+// The save / discard cluster stays quiet until there is something to save,
+// then the save button gets an accent so it is hard to miss.
+.o_form_status_indicator .o_form_button_save {
+    background-color: var(--fx-primary);
+    border-color: var(--fx-primary);
+    color: var(--fx-on-primary);
+    box-shadow: 0 0 0 3px rgba(var(--fx-primary-rgb), .18);
+}
+.o_form_status_indicator .o_form_button_cancel {
+    color: var(--fx-text-muted);
+}
+.o_form_status_indicator .text-warning,
+.o_form_status_indicator .fa-warning {
+    color: var(--fx-warning) !important;
+}
+
+// ------------------------------------------------- One2many / Many2many ----
+.o_form_view .o_field_x2many .o_list_renderer {
+    border: 1px solid var(--fx-border);
+    border-radius: var(--fx-radius);
+    background-color: var(--fx-surface);
+}
+.o_form_view .o_field_x2many_list_row_add a,
+.o_form_view .o_field_x2many_list_row_add .btn-link {
+    color: var(--fx-primary-ink);
+    font-weight: 500;
+}
+
+// Tags
+.o_tag {
+    border-radius: var(--fx-radius-pill);
+}
+
+// Chatter spacing: slight separation from the sheet
+.o-mail-Form-chatter,
+.o-mail-Chatter {
+    background-color: transparent;
+}
+
+// Tabs (Order Lines / Other Info ...): larger, bolder active tab
+.o_form_view .o_notebook .nav-tabs .nav-link {
+    font-size: 1rem;
+    padding: 12px 18px;
+}
+.o_form_view .o_notebook .nav-tabs .nav-link.active {
+    color: var(--fx-text);
+    border-bottom-color: var(--fx-primary);
+    font-weight: 700;
+}

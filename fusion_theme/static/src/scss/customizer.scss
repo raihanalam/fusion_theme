@@ -1,0 +1,124 @@
+// =============================================================================
+// Fusion Theme - appearance panel (opened from the palette button in the top bar)
+// =============================================================================
+.fx-customizer-btn {
+    display: inline-grid;
+    place-items: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    border: 0;
+    background: transparent;
+    color: var(--fx-text-muted);
+    font-size: 1.05rem;
+}
+
+.o-dropdown--menu.fx-customizer {
+    width: 330px;
+    max-width: calc(100vw - 24px);
+    padding: 0;
+    border-radius: var(--fx-radius-lg);
+    box-shadow: var(--fx-shadow-lg);
+}
+
+.fx-panel {
+    padding: 16px 16px 12px;
+    color: var(--fx-text);
+
+    .fx-panel-title {
+        margin: 0 0 12px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: -.015em;
+    }
+    .fx-group {
+        margin-bottom: 14px;
+    }
+    .fx-group-label {
+        margin-bottom: 6px;
+        font-size: .8125rem;
+        font-weight: 600;
+        color: var(--fx-text-muted);
+    }
+}
+
+// Segmented control
+.fx-seg {
+    display: flex;
+    padding: 3px;
+    gap: 2px;
+    border-radius: var(--fx-radius);
+    background: var(--fx-surface-3);
+
+    .fx-seg-btn {
+        flex: 1 1 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-height: 32px;
+        padding: 0 8px;
+        border: 0;
+        border-radius: calc(var(--fx-radius) - 2px);
+        background: transparent;
+        color: var(--fx-text-muted);
+        font-size: .8125rem;
+        font-weight: 500;
+        transition: background-color var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease), box-shadow var(--fx-dur) var(--fx-ease);
+
+        &:hover {
+            color: var(--fx-text);
+        }
+        &.is-on {
+            background: var(--fx-surface);
+            color: var(--fx-primary-ink);
+            font-weight: 650;
+            box-shadow: var(--fx-shadow-sm);
+        }
+    }
+}
+
+// Accent swatches
+.fx-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .fx-swatch {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: var(--sw);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+        transition: transform var(--fx-dur) var(--fx-ease), box-shadow var(--fx-dur) var(--fx-ease);
+
+        &:hover {
+            transform: scale(1.1);
+        }
+        &.is-on {
+            box-shadow: 0 0 0 2px var(--fx-surface), 0 0 0 4px var(--sw);
+        }
+        &.is-on::after {
+            content: "\f00c";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font: 12px/1 FontAwesome;
+        }
+    }
+}
+
+.fx-panel-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 6px;
+    margin: 0 -16px;
+    padding: 10px 16px 0;
+    border-top: 1px solid var(--fx-border);
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- Desktop: replace the stock apps dropdown with a button that collapses
+         and expands the sidebar. On small screens Odoo's own burger menu is kept. -->
+    <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_navbar_apps_menu')]/Dropdown" position="replace">
+            <button type="button" class="fx-sidebar-toggle" data-hotkey="h"
+                    title="Toggle apps sidebar" aria-label="Toggle apps sidebar"
+                    t-att-aria-expanded="fusionState.sidebar !== 'collapsed' ? 'true' : 'false'"
+                    t-on-click="() => fusion.toggleSidebar()">
+                <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                    <rect class="fx-toggle-panel" x="2.5" y="3.5" width="15" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                    <rect class="fx-toggle-bar" x="6" y="3.5" width="1.6" height="13" fill="currentColor"/>
+                </svg>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

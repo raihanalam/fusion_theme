@@ -1,0 +1,163 @@
+// =============================================================================
+// Fusion Theme - design tokens
+// Everything visual in the theme reads from the --fx-* custom properties
+// defined here, which is what makes live accent colors, dark mode, density
+// and corner options possible without recompiling any stylesheet.
+// The <html> element carries the user's choices as data attributes:
+//   data-fx-accent | data-fx-mode | data-fx-density | data-fx-corners
+// =============================================================================
+
+// name: (accent color, sidebar color). Every accent keeps >= 4.5:1 contrast
+// with white text so primary buttons stay readable.
+$fx-presets: (
+    fusion:  (#0B7F8A, #0A2A33),
+    indigo:  (#4F46E5, #1E1B4B),
+    violet:  (#7C3AED, #2E1065),
+    emerald: (#15803D, #0F2E1B),
+    rose:    (#BE123C, #3B0A1E),
+    amber:   (#B45309, #2E1D08),
+    slate:   (#334155, #17202B)
+);
+
+@mixin fx-accent($primary, $side) {
+    --fx-primary: #{$primary};
+    --fx-primary-rgb: #{red($primary)}, #{green($primary)}, #{blue($primary)};
+    --fx-side-bg: #{$side};
+}
+
+:root {
+    @include fx-accent(#0B7F8A, #0A2A33);
+
+    // Typography
+    --fx-font: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Bengali", Arial, sans-serif;
+
+    // Surfaces (light)
+    --fx-bg: #F2F5F7;
+    --fx-surface: #FFFFFF;
+    --fx-surface-2: #F7F9FA;
+    --fx-surface-3: #EDF1F3;
+    --fx-border: #E2E8EC;
+    --fx-border-strong: #CBD5DB;
+    --fx-text: #14202B;
+    --fx-text-muted: #556675;
+    --fx-text-faint: #8695A2;
+    --fx-on-primary: #FFFFFF;
+
+    // Elevation
+    --fx-shadow-sm: 0 1px 2px rgba(16, 32, 43, .06), 0 1px 3px rgba(16, 32, 43, .04);
+    --fx-shadow-md: 0 6px 18px rgba(16, 32, 43, .09), 0 2px 6px rgba(16, 32, 43, .05);
+    --fx-shadow-lg: 0 18px 48px rgba(16, 32, 43, .18), 0 4px 12px rgba(16, 32, 43, .08);
+
+    // Shape
+    --fx-radius-sm: 6px;
+    --fx-radius: 10px;
+    --fx-radius-lg: 14px;
+    --fx-radius-pill: 999px;
+
+    // Semantic colors (all >= 4.5:1 on white when used as text)
+    --fx-success: #15803D;
+    --fx-warning: #B45309;
+    --fx-danger: #B91C1C;
+    --fx-info: #0369A1;
+
+    // Highlight: decorative coral (sidebar marker) and a deeper variant that is
+    // safe for text-bearing badges.
+    --fx-highlight: #FF7A59;
+    --fx-badge: #CF3F1B;
+
+    // Density
+    --fx-cell-py: 11px;
+    --fx-cell-px: 14px;
+    --fx-field-gap: 14px;
+
+    // Motion
+    --fx-ease: cubic-bezier(.2, .7, .2, 1);
+    --fx-dur: .18s;
+
+    // Sidebar geometry
+    --fx-side-w-expanded: 264px;
+    --fx-side-w-collapsed: 76px;
+    --fx-navbar-h: 56px;
+
+    // Derived accent tones (recomputed whenever accent or surface changes)
+    --fx-primary-hover: color-mix(in srgb, var(--fx-primary) 84%, #000);
+    --fx-primary-active: color-mix(in srgb, var(--fx-primary) 70%, #000);
+    --fx-primary-soft: color-mix(in srgb, var(--fx-primary) 9%, var(--fx-surface));
+    --fx-primary-soft-2: color-mix(in srgb, var(--fx-primary) 17%, var(--fx-surface));
+    --fx-primary-ink: var(--fx-primary);
+    --fx-ring: rgba(var(--fx-primary-rgb), .32);
+
+    // Bridge to Bootstrap 5.3 so utilities (text-primary, bg-primary, links...)
+    // follow the runtime accent and surface colors.
+    --bs-primary: var(--fx-primary);
+    --bs-primary-rgb: var(--fx-primary-rgb);
+    --bs-link-color: var(--fx-primary-ink);
+    --bs-link-hover-color: var(--fx-primary-hover);
+    --bs-body-font-family: var(--fx-font);
+    --bs-body-color: var(--fx-text);
+    --bs-body-bg: var(--fx-surface);
+    --bs-border-color: var(--fx-border);
+    --bs-heading-color: var(--fx-text);
+    --bs-secondary-color: var(--fx-text-muted);
+    --bs-focus-ring-color: var(--fx-ring);
+}
+
+// Accent presets
+@each $name, $cfg in $fx-presets {
+    html[data-fx-accent="#{$name}"] {
+        @include fx-accent(nth($cfg, 1), nth($cfg, 2));
+    }
+}
+
+// Dark mode: swap surfaces and lighten the accent used for text and links.
+// Component-level fixes for stock widgets live in dark.scss.
+html[data-fx-mode="dark"] {
+    --fx-bg: #0D1216;
+    --fx-surface: #151C22;
+    --fx-surface-2: #1A232A;
+    --fx-surface-3: #222D35;
+    --fx-border: #26323B;
+    --fx-border-strong: #364550;
+    --fx-text: #E7EDF1;
+    --fx-text-muted: #9BACB9;
+    --fx-text-faint: #6F818E;
+
+    --fx-shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+    --fx-shadow-md: 0 8px 22px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .35);
+    --fx-shadow-lg: 0 20px 56px rgba(0, 0, 0, .6), 0 4px 12px rgba(0, 0, 0, .4);
+
+    --fx-success: #4ADE80;
+    --fx-warning: #FBBF24;
+    --fx-danger: #F87171;
+    --fx-info: #38BDF8;
+
+    --fx-primary-ink: color-mix(in srgb, var(--fx-primary) 52%, #fff);
+    --fx-primary-soft: color-mix(in srgb, var(--fx-primary) 16%, var(--fx-surface));
+    --fx-primary-soft-2: color-mix(in srgb, var(--fx-primary) 28%, var(--fx-surface));
+
+    --bs-body-color-rgb: 231, 237, 241;
+    --bs-emphasis-color: #FFFFFF;
+    --bs-secondary-bg: var(--fx-surface-3);
+    --bs-tertiary-bg: var(--fx-surface-2);
+}
+
+// Density
+html[data-fx-density="compact"] {
+    --fx-cell-py: 5px;
+    --fx-cell-px: 10px;
+    --fx-field-gap: 8px;
+}
+
+// Corners
+html[data-fx-corners="sharp"] {
+    --fx-radius-sm: 2px;
+    --fx-radius: 3px;
+    --fx-radius-lg: 4px;
+}
+
+// Respect the OS setting: no motion at all when the user asked for less.
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --fx-dur: 0s;
+    }
+}

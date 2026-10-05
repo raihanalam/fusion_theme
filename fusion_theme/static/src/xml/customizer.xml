@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="fusion_theme.Customizer">
+        <Dropdown position="'bottom-end'" menuClass="'fx-customizer'">
+            <button class="fx-customizer-btn" title="Appearance" aria-label="Appearance settings">
+                <i class="fa fa-sliders" aria-hidden="true"/>
+            </button>
+            <t t-set-slot="content">
+                <div class="fx-panel">
+                    <h3 class="fx-panel-title">Appearance</h3>
+
+                    <section class="fx-group">
+                        <div class="fx-group-label" id="fx-label-mode">Mode</div>
+                        <div class="fx-seg" role="radiogroup" aria-labelledby="fx-label-mode">
+                            <button t-foreach="modes" t-as="m" t-key="m.id" type="button" role="radio"
+                                    class="fx-seg-btn" t-att-class="{'is-on': state.mode === m.id}"
+                                    t-att-aria-checked="state.mode === m.id ? 'true' : 'false'"
+                                    t-on-click="() => fusion.set('mode', m.id)">
+                                <i t-att-class="'fa ' + m.icon" aria-hidden="true"/>
+                                <t t-esc="m.label"/>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="fx-group">
+                        <div class="fx-group-label" id="fx-label-accent">Accent color</div>
+                        <div class="fx-swatches" role="radiogroup" aria-labelledby="fx-label-accent">
+                            <button t-foreach="accents" t-as="a" t-key="a.id" type="button" role="radio"
+                                    class="fx-swatch" t-att-class="{'is-on': state.accent === a.id}"
+                                    t-att-style="swatchStyle(a)" t-att-title="a.label" t-att-aria-label="a.label"
+                                    t-att-aria-checked="state.accent === a.id ? 'true' : 'false'"
+                                    t-on-click="() => fusion.set('accent', a.id)"/>
+                        </div>
+                    </section>
+
+                    <section class="fx-group">
+                        <div class="fx-group-label" id="fx-label-density">Density</div>
+                        <div class="fx-seg" role="radiogroup" aria-labelledby="fx-label-density">
+                            <button t-foreach="densities" t-as="d" t-key="d.id" type="button" role="radio"
+                                    class="fx-seg-btn" t-att-class="{'is-on': state.density === d.id}"
+                                    t-att-aria-checked="state.density === d.id ? 'true' : 'false'"
+                                    t-on-click="() => fusion.set('density', d.id)">
+                                <t t-esc="d.label"/>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="fx-group">
+                        <div class="fx-group-label" id="fx-label-corners">Corners</div>
+                        <div class="fx-seg" role="radiogroup" aria-labelledby="fx-label-corners">
+                            <button t-foreach="cornerStyles" t-as="c" t-key="c.id" type="button" role="radio"
+                                    class="fx-seg-btn" t-att-class="{'is-on': state.corners === c.id}"
+                                    t-att-aria-checked="state.corners === c.id ? 'true' : 'false'"
+                                    t-on-click="() => fusion.set('corners', c.id)">
+                                <t t-esc="c.label"/>
+                            </button>
+                        </div>
+                    </section>
+
+                    <div class="fx-panel-foot">
+                        <button type="button" class="btn btn-link btn-sm" t-on-click="() => fusion.reset()">Reset to defaults</button>
+                        <button t-if="fusion.canSetDefaults" type="button" class="btn btn-secondary btn-sm"
+                                t-on-click="() => fusion.saveAsDefault()">Use as default for everyone</button>
+                    </div>
+                </div>
+            </t>
+        </Dropdown>
+    </t>
+
+</templates>

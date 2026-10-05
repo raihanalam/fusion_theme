@@ -1,0 +1,163 @@
+// =============================================================================
+// Fusion Theme - list view
+// Calm, scannable tables: quiet header, hover and selection states, row accent
+// bar, tabular numerals and density support.
+// =============================================================================
+.o_list_renderer {
+    --ListRenderer-thead-bg-color: var(--fx-surface-2);
+    --ListRenderer-tfoot-bg-color: var(--fx-surface-2);
+    --ListRenderer-thead-border-end-color: transparent;
+    --ListRenderer-thead-padding-y: var(--fx-cell-py);
+    --ListRenderer-table-padding-x: var(--fx-cell-px);
+}
+
+.o_list_renderer .o_list_table {
+    --table-bg: var(--fx-surface);
+    --table-color: var(--fx-text);
+    --table-striped-bg: var(--fx-surface-2);
+    --table-hover-bg: var(--fx-primary-soft);
+    --bs-table-bg: var(--fx-surface);
+    --bs-table-color: var(--fx-text);
+    --bs-table-striped-bg: var(--fx-surface-2);
+    --bs-table-hover-bg: var(--fx-primary-soft);
+    --bs-table-border-color: var(--fx-border);
+    color: var(--fx-text);
+    background-color: var(--fx-surface);
+}
+
+// ------------------------------------------------------------ Header --------
+.o_list_renderer .o_list_table thead th {
+    background-color: var(--fx-surface-2);
+    color: var(--fx-text-muted);
+    font-size: .72rem;
+    font-weight: 650;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--fx-border-strong);
+    transition: background-color var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease);
+}
+.o_list_renderer .o_list_table thead th.o_column_sortable:hover {
+    background-color: var(--fx-surface-3);
+    color: var(--fx-text);
+    cursor: pointer;
+}
+// Sorted column
+.o_list_renderer .o_list_table thead th.o_column_sortable:has(.fa-angle-up, .fa-angle-down, .oi-arrow-up, .oi-arrow-down) {
+    color: var(--fx-primary-ink);
+}
+.o_list_renderer .o_list_table thead .o_list_actions_header,
+.o_list_renderer .o_list_table thead .o_optional_columns_dropdown_toggle {
+    color: var(--fx-text-muted);
+}
+
+// ------------------------------------------------------------- Rows ---------
+.o_list_renderer .o_list_table tbody > tr > td,
+.o_list_renderer .o_list_table tbody > tr > th {
+    padding-top: var(--fx-cell-py);
+    padding-bottom: var(--fx-cell-py);
+    padding-left: var(--fx-cell-px);
+    padding-right: var(--fx-cell-px);
+    vertical-align: middle;
+}
+.o_list_renderer .o_list_table .o_data_row {
+    border-bottom-color: var(--fx-border);
+}
+
+// Striped rows (Settings > Fusion Theme > Striped list rows). :where() keeps the
+// specificity low so hover, selected and editing states still win.
+[data-fx-zebra="on"] .o_list_renderer .o_list_table :where(.o_data_row:nth-child(even):not(.o_data_row_selected):not(.o_selected_row)) > td {
+    background-color: var(--fx-surface-2);
+}
+
+// Hover: tint plus a thin accent bar on the leading edge
+.o_list_renderer .o_list_table .o_data_row:not(.o_selected_row):hover > td,
+.o_list_renderer .o_list_table .o_data_row:not(.o_selected_row):hover > th {
+    background-color: var(--fx-primary-soft);
+    cursor: pointer;
+}
+.o_list_renderer .o_list_table .o_data_row:not(.o_selected_row):hover > td:first-child,
+.o_list_renderer .o_list_table .o_data_row:not(.o_selected_row):hover > th:first-child {
+    box-shadow: inset 3px 0 0 0 var(--fx-primary);
+}
+
+// Selected (checked) rows
+.o_list_renderer .o_list_table .o_data_row.o_data_row_selected > td,
+.o_list_renderer .o_list_table .o_data_row.o_data_row_selected > th {
+    background-color: var(--fx-primary-soft-2);
+}
+.o_list_renderer .o_list_table .o_data_row.o_data_row_selected > td:first-child,
+.o_list_renderer .o_list_table .o_data_row.o_data_row_selected > th:first-child {
+    box-shadow: inset 3px 0 0 0 var(--fx-primary);
+}
+
+// Row being edited inline: lifted card with accent outline
+.o_list_renderer .o_list_table .o_data_row.o_selected_row > td {
+    background-color: var(--fx-surface);
+    box-shadow: inset 0 1px 0 0 var(--fx-primary), inset 0 -1px 0 0 var(--fx-primary);
+}
+.o_list_renderer .o_list_table .o_data_row.o_selected_row > td:first-child {
+    box-shadow: inset 3px 0 0 0 var(--fx-primary), inset 0 1px 0 0 var(--fx-primary), inset 0 -1px 0 0 var(--fx-primary);
+}
+
+// Keyboard focus inside the table
+.o_list_renderer .o_list_table .o_keyboard_navigation td:focus-within {
+    background-color: var(--fx-primary-soft);
+}
+
+// Row decorations keep their meaning but with softer tones
+.o_list_renderer .o_data_row.text-muted > td,
+.o_list_renderer .o_data_row.text-muted .o_data_cell {
+    color: var(--fx-text-faint) !important;
+}
+.o_list_renderer .o_data_row.text-danger > td { color: var(--fx-danger) !important; }
+.o_list_renderer .o_data_row.text-success > td { color: var(--fx-success) !important; }
+.o_list_renderer .o_data_row.text-warning > td { color: var(--fx-warning) !important; }
+.o_list_renderer .o_data_row.text-info > td { color: var(--fx-info) !important; }
+
+// ----------------------------------------------------- Groups & footer -----
+.o_list_renderer .o_list_table tbody > tr.o_group_header > th,
+.o_list_renderer .o_list_table tbody > tr.o_group_header > td {
+    background-color: var(--fx-surface-3);
+    color: var(--fx-text);
+    font-weight: 600;
+    border-bottom: 1px solid var(--fx-border);
+}
+.o_list_renderer .o_list_table tbody > tr.o_group_header:hover > th,
+.o_list_renderer .o_list_table tbody > tr.o_group_header:hover > td {
+    background-color: var(--fx-primary-soft-2);
+    cursor: pointer;
+}
+.o_list_renderer .o_list_table tfoot td,
+.o_list_renderer .o_list_table tfoot th {
+    background-color: var(--fx-surface-2);
+    border-top: 1px solid var(--fx-border-strong);
+    color: var(--fx-text);
+    font-weight: 650;
+}
+
+// -------------------------------------------------------- Checkboxes -------
+.o_list_renderer .o_list_record_selector,
+.o_list_renderer .o_list_table thead .o_list_record_selector {
+    width: 38px;
+}
+
+// ------------------------------------------------------- Empty state -------
+.o_view_nocontent .o_nocontent_help {
+    background-color: var(--fx-surface);
+    border: 1px dashed var(--fx-border-strong);
+    border-radius: var(--fx-radius-lg);
+    box-shadow: var(--fx-shadow-sm);
+    color: var(--fx-text-muted);
+}
+.o_view_nocontent .o_nocontent_help p:first-of-type {
+    color: var(--fx-text);
+    font-weight: 650;
+    letter-spacing: -.01em;
+}
+
+// Pivot / graph tables share the quiet header
+.o_pivot table thead th,
+.o_pivot_header_cell_closed,
+.o_pivot_header_cell_opened {
+    background-color: var(--fx-surface-2);
+}

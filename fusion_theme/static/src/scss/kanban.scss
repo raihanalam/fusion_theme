@@ -1,0 +1,70 @@
+// =============================================================================
+// Fusion Theme - kanban view
+// =============================================================================
+.o_kanban_renderer {
+    --KanbanRecord-padding-h: 12px;
+    --KanbanRecord-padding-v: 10px;
+}
+.o_kanban_renderer .o_kanban_record {
+    background-color: var(--fx-surface);
+    border: 1px solid var(--fx-border);
+    border-radius: var(--fx-radius);
+    box-shadow: var(--fx-shadow-sm);
+    color: var(--fx-text);
+    transition: border-color var(--fx-dur) var(--fx-ease), box-shadow var(--fx-dur) var(--fx-ease), transform var(--fx-dur) var(--fx-ease);
+}
+.o_kanban_renderer .o_kanban_record:hover {
+    border-color: rgba(var(--fx-primary-rgb), .5);
+    box-shadow: var(--fx-shadow-md);
+    transform: translateY(-1px);
+}
+.o_kanban_renderer .o_kanban_record:focus-within {
+    outline: 2px solid var(--fx-primary-ink);
+    outline-offset: 1px;
+}
+.o_kanban_renderer .o_kanban_record.o_dragged {
+    box-shadow: var(--fx-shadow-lg);
+    transform: rotate(1.2deg);
+}
+
+// Grouped columns
+.o_kanban_renderer.o_kanban_grouped .o_kanban_group {
+    background-color: var(--fx-surface-3);
+    border-radius: var(--fx-radius-lg);
+    border: 1px solid var(--fx-border);
+}
+.o_kanban_renderer .o_kanban_header .o_column_title {
+    font-weight: 650;
+    letter-spacing: -.005em;
+    color: var(--fx-text);
+}
+.o_kanban_renderer .o_kanban_header .o_kanban_config .btn,
+.o_kanban_renderer .o_kanban_header .o_kanban_quick_add {
+    color: var(--fx-text-muted);
+}
+.o_kanban_renderer .o_kanban_header .o_kanban_quick_add:hover {
+    color: var(--fx-primary-ink);
+}
+.o_kanban_renderer .o_kanban_group.o_kanban_hover {
+    background-color: var(--fx-primary-soft);
+    border-color: var(--fx-primary);
+}
+
+// Column progress bar
+.o_kanban_renderer .o_column_progress {
+    border-radius: var(--fx-radius-pill);
+    overflow: hidden;
+}
+
+// Quick create
+.o_kanban_renderer .o_kanban_quick_create {
+    border-radius: var(--fx-radius);
+    border: 1px solid var(--fx-primary);
+    box-shadow: 0 0 0 3px var(--fx-ring);
+    background-color: var(--fx-surface);
+}
+
+// Ungrouped kanban (cards in a grid)
+.o_kanban_renderer.o_kanban_ungrouped .o_kanban_record {
+    margin-bottom: 8px;
+}

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Settings > Fusion Theme -->
+    <record id="res_config_settings_view_form_fusion_theme" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.fusion.theme</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="95"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Fusion Theme" string="Fusion Theme" name="fusion_theme" groups="base.group_system">
+
+                    <block title="Navigation" name="fusion_navigation_block">
+                        <setting string="Menu icon style" id="fusion_menu_icon_style_setting"
+                                 help="How apps look in the sidebar. Original keeps the standard Odoo icons exactly as they are.">
+                            <field name="fusion_menu_icon_style" widget="radio"/>
+                        </setting>
+                        <setting string="Sidebar" id="fusion_sidebar_setting"
+                                 help="How the sidebar starts for users who have not chosen their own.">
+                            <field name="fusion_default_sidebar"/>
+                        </setting>
+                        <setting string="App search" id="fusion_sidebar_search_setting"
+                                 help="Show a search box at the top of the sidebar.">
+                            <field name="fusion_sidebar_search"/>
+                        </setting>
+                    </block>
+
+                    <block title="Appearance" name="fusion_appearance_block">
+                        <setting string="Color mode" id="fusion_mode_setting"
+                                 help="Default for everyone. Users can change it from the appearance panel unless it is locked below.">
+                            <field name="fusion_default_mode"/>
+                        </setting>
+                        <setting string="Accent color" id="fusion_accent_setting"
+                                 help="The brand color used for buttons, links, active states and the sidebar.">
+                            <field name="fusion_default_accent"/>
+                        </setting>
+                        <setting string="Density" id="fusion_density_setting"
+                                 help="Compact reduces spacing in lists and forms to show more on screen.">
+                            <field name="fusion_default_density"/>
+                        </setting>
+                        <setting string="Corners" id="fusion_corners_setting"
+                                 help="Rounded or sharp corners on cards, buttons and fields.">
+                            <field name="fusion_default_corners"/>
+                        </setting>
+                    </block>
+
+                    <block title="Views" name="fusion_views_block">
+                        <setting string="Form view width" id="fusion_form_width_setting"
+                                 help="Full width uses all available space. Standard keeps forms in a centered column.">
+                            <field name="fusion_form_width"/>
+                        </setting>
+                        <setting string="Striped list rows" id="fusion_zebra_setting"
+                                 help="Alternate row shading in list views to make long tables easier to scan.">
+                            <field name="fusion_zebra_rows"/>
+                        </setting>
+                    </block>
+
+                    <block title="Personalization" name="fusion_personalization_block">
+                        <setting string="Lock appearance" id="fusion_lock_setting"
+                                 help="Hide the appearance panel and ignore personal choices, so every user sees the settings above.">
+                            <field name="fusion_lock_appearance"/>
+                        </setting>
+                    </block>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

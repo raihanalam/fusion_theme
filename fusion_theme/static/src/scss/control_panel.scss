@@ -1,0 +1,118 @@
+// =============================================================================
+// Fusion Theme - control panel (breadcrumbs, search, filters, pager)
+// =============================================================================
+.o_control_panel {
+    --ControlPanel-border-bottom: 1px solid var(--fx-border);
+    background-color: var(--fx-surface);
+    border-bottom: 1px solid var(--fx-border);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.o_control_panel .breadcrumb {
+    --bs-breadcrumb-divider-color: var(--fx-text-faint);
+    --bs-breadcrumb-item-active-color: var(--fx-text);
+    font-size: 1rem;
+}
+.o_control_panel .breadcrumb-item a {
+    color: var(--fx-text-muted);
+    border-radius: var(--fx-radius-sm);
+    transition: color var(--fx-dur) var(--fx-ease);
+
+    &:hover {
+        color: var(--fx-primary-ink);
+    }
+}
+.o_control_panel .o_last_breadcrumb_item,
+.o_control_panel .breadcrumb-item.active {
+    font-weight: 650;
+    letter-spacing: -.012em;
+    color: var(--fx-text);
+}
+
+// Search box: one rounded field containing facets and input
+.o_searchview {
+    background-color: var(--fx-surface-2);
+    border: 1px solid var(--fx-border);
+    border-radius: var(--fx-radius);
+    transition: border-color var(--fx-dur) var(--fx-ease), box-shadow var(--fx-dur) var(--fx-ease), background-color var(--fx-dur) var(--fx-ease);
+
+    &:hover {
+        border-color: var(--fx-border-strong);
+    }
+    &:focus-within {
+        background-color: var(--fx-surface);
+        border-color: var(--fx-primary);
+        box-shadow: 0 0 0 3px var(--fx-ring);
+    }
+    .o_searchview_input {
+        background: transparent;
+        color: var(--fx-text);
+    }
+    .o_searchview_facet {
+        border-radius: var(--fx-radius-pill);
+        overflow: hidden;
+        border: 1px solid rgba(var(--fx-primary-rgb), .35);
+        background-color: var(--fx-primary-soft);
+        color: var(--fx-primary-ink);
+    }
+    .o_searchview_facet .o_searchview_facet_label {
+        background-color: var(--fx-primary);
+        color: var(--fx-on-primary);
+    }
+    .o_facet_remove {
+        color: var(--fx-primary-ink);
+    }
+    .o_searchview_icon,
+    .o_searchview_dropdown_toggler {
+        color: var(--fx-text-muted);
+    }
+}
+.o_searchview_autocomplete li.focus,
+.o_searchview_autocomplete li:hover {
+    background-color: var(--fx-primary-soft);
+}
+
+// View switcher: segmented buttons
+.o_cp_switch_buttons {
+    gap: 0;
+
+    .btn {
+        background: var(--fx-surface);
+        border-color: var(--fx-border-strong);
+        color: var(--fx-text-muted);
+        padding-left: 11px;
+        padding-right: 11px;
+
+        &:hover {
+            color: var(--fx-text);
+            background: var(--fx-surface-3);
+        }
+        &.active {
+            background: var(--fx-primary) !important;
+            border-color: var(--fx-primary) !important;
+            color: var(--fx-on-primary) !important;
+        }
+    }
+}
+
+// Pager
+.o_pager {
+    color: var(--fx-text-muted);
+    font-variant-numeric: tabular-nums;
+
+    .o_pager_value {
+        border-radius: var(--fx-radius-sm);
+        color: var(--fx-text);
+        font-weight: 600;
+    }
+    .btn {
+        padding: 4px 8px;
+    }
+}
+
+// Create / Save buttons in the control panel breathe a little
+.o_control_panel .o_cp_buttons .btn {
+    padding-left: 14px;
+    padding-right: 14px;
+}

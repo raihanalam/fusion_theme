@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Company-wide defaults. Change them in Settings > Fusion Theme. -->
+    <data noupdate="1">
+        <record id="param_default_accent" model="ir.config_parameter">
+            <field name="key">fusion_theme.default_accent</field>
+            <field name="value">fusion</field>
+        </record>
+        <record id="param_default_mode" model="ir.config_parameter">
+            <field name="key">fusion_theme.default_mode</field>
+            <field name="value">light</field>
+        </record>
+        <record id="param_default_density" model="ir.config_parameter">
+            <field name="key">fusion_theme.default_density</field>
+            <field name="value">comfortable</field>
+        </record>
+        <record id="param_default_corners" model="ir.config_parameter">
+            <field name="key">fusion_theme.default_corners</field>
+            <field name="value">round</field>
+        </record>
+        <record id="param_default_sidebar" model="ir.config_parameter">
+            <field name="key">fusion_theme.default_sidebar</field>
+            <field name="value">expanded</field>
+        </record>
+        <record id="param_menu_icon_style" model="ir.config_parameter">
+            <field name="key">fusion_theme.menu_icon_style</field>
+            <field name="value">original</field>
+        </record>
+        <record id="param_form_width" model="ir.config_parameter">
+            <field name="key">fusion_theme.form_width</field>
+            <field name="value">full</field>
+        </record>
+        <record id="param_sidebar_search" model="ir.config_parameter">
+            <field name="key">fusion_theme.sidebar_search</field>
+            <field name="value">True</field>
+        </record>
+        <record id="param_zebra_rows" model="ir.config_parameter">
+            <field name="key">fusion_theme.zebra_rows</field>
+            <field name="value">True</field>
+        </record>
+        <record id="param_lock_appearance" model="ir.config_parameter">
+            <field name="key">fusion_theme.lock_appearance</field>
+            <field name="value">False</field>
+        </record>
+    </data>
+</odoo>

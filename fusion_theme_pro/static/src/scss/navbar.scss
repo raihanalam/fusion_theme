@@ -1,0 +1,138 @@
+// =============================================================================
+// Fusion Theme Pro - top navigation bar
+// =============================================================================
+.o_main_navbar {
+    --o-navbar-height: var(--fx-navbar-h);
+
+    // Hooks exposed by Odoo's own navbar stylesheet
+    --NavBar-entry-color: var(--fx-text-muted);
+    --NavBar-entry-color--active: var(--fx-text);
+    --NavBar-entry-backgroundColor: transparent;
+    --NavBar-entry-backgroundColor--hover: var(--fx-surface-3);
+    --NavBar-entry-backgroundColor--focus: var(--fx-surface-3);
+    --NavBar-entry-backgroundColor--active: var(--fx-primary-soft);
+    --NavBar-entry-borderColor-active: transparent;
+    --NavBar-brand-color: var(--fx-text);
+    --o-navbar-badge-bg: var(--fx-badge);
+    --o-navbar-badge-color: #fff;
+    --o-navbar-badge-text-shadow: none;
+
+    background: var(--fx-surface);
+    border-bottom: 1px solid var(--fx-border);
+    box-shadow: none;
+    color: var(--fx-text);
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 4px;
+    align-items: center;
+}
+
+// Current app name
+.o_main_navbar .o_menu_brand {
+    font-weight: 650;
+    letter-spacing: -.012em;
+    color: var(--fx-text);
+}
+
+// Section menus (Orders, Products, Reporting, ...)
+.o_main_navbar .o_menu_sections {
+    gap: 2px;
+}
+.o_main_navbar .o_menu_sections .o_nav_entry,
+.o_main_navbar .o_menu_sections .dropdown-toggle {
+    position: relative;
+    border-radius: var(--fx-radius);
+    font-weight: 500;
+    color: var(--fx-text-muted);
+    background: transparent;
+    border-color: transparent;
+    transition: background-color var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease);
+}
+.o_main_navbar .o_menu_sections .o_nav_entry:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:hover {
+    color: var(--fx-text);
+    background: var(--fx-surface-3);
+}
+.o_main_navbar .o_menu_sections .dropdown-toggle.show,
+.o_main_navbar .o_menu_sections .o_nav_entry.active {
+    color: var(--fx-primary-ink);
+    background: var(--fx-primary-soft);
+}
+
+// Sidebar toggle button (replaces the stock apps dropdown)
+.fx-sidebar-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin: 0 6px 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--fx-radius);
+    background: transparent;
+    color: var(--fx-text-muted);
+    cursor: pointer;
+    transition: background-color var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease);
+
+    &:hover {
+        background: var(--fx-surface-3);
+        color: var(--fx-text);
+    }
+    &:active {
+        background: var(--fx-primary-soft-2);
+    }
+
+    svg {
+        display: block;
+    }
+    .fx-toggle-panel {
+        transition: transform .24s var(--fx-ease);
+        transform-origin: 9px 12px;
+    }
+}
+body.fx-sidebar-collapsed .fx-sidebar-toggle .fx-toggle-bar {
+    transform: translateX(-2px);
+}
+
+// Systray (right side)
+.o_main_navbar .o_menu_systray {
+    gap: 2px;
+    align-items: center;
+
+    > * {
+        border-radius: var(--fx-radius);
+    }
+    button,
+    .o_nav_entry,
+    .dropdown-toggle {
+        border-radius: var(--fx-radius);
+        color: var(--fx-text-muted);
+        transition: background-color var(--fx-dur) var(--fx-ease), color var(--fx-dur) var(--fx-ease);
+        border-color: transparent;
+    }
+    button:hover,
+    .o_nav_entry:hover,
+    .dropdown-toggle:hover,
+    .dropdown-toggle.show {
+        background: var(--fx-surface-3);
+        color: var(--fx-text);
+    }
+    .badge {
+        box-shadow: 0 0 0 2px var(--fx-surface);
+    }
+}
+
+// User avatar
+.o_main_navbar .o_user_menu .o_user_avatar,
+.o_main_navbar .o_user_menu .o_avatar {
+    border-radius: var(--fx-radius) !important;
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    box-shadow: 0 0 0 2px var(--fx-surface), 0 0 0 3px var(--fx-border-strong);
+}
+
+// Navbar dropdowns sit closer to their trigger and use the shared menu look.
+.o_main_navbar .dropdown-menu {
+    min-width: 200px;
+}

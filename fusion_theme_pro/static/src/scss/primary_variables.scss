@@ -1,0 +1,12 @@
+// Fusion Theme Pro - compile-time brand variables.
+// Loaded BEFORE web's primary_variables.scss (whose values use !default), so
+// every stock component compiles with the Fusion teal as its brand color.
+// Runtime accent presets (see tokens.scss) then override it live.
+$o-community-color: #0B7F8A;
+$o-brand-primary: #0B7F8A;
+$o-action: #0B7F8A;
+$o-main-link-color: #0A6F79;
+$o-main-text-color: #14202B;
+$o-main-headings-color: #0B1620;
+$o-webclient-background-color: #F2F5F7;
+$o-view-background-color: #FFFFFF;

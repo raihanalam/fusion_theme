@@ -1,0 +1,554 @@
+<div class="fusion-desc">
+  <style>
+    .fusion-desc {
+      --f-accent: #7c5cff;
+      --f-accent-2: #22d3ee;
+      --f-ink: #0f172a;
+      --f-ink-soft: #4b5563;
+      --f-muted: #6b7280;
+      --f-line: #e6e9f0;
+      --f-surface: #ffffff;
+      --f-bg: #f7f8fc;
+
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      color: var(--f-ink);
+      background: var(--f-bg);
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .fusion-desc *,
+    .fusion-desc *::before,
+    .fusion-desc *::after { box-sizing: border-box; }
+
+    /* ---------- HERO ---------- */
+    .fusion-desc .fd-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 44px 36px 40px;
+      background:
+        radial-gradient(650px 320px at 88% -10%, rgba(34, 211, 238, .35), transparent 60%),
+        radial-gradient(560px 320px at 5% 110%, rgba(124, 92, 255, .45), transparent 62%),
+        linear-gradient(135deg, #0b1220 0%, #161a3d 48%, #241f56 100%);
+      color: #fff;
+      box-shadow: 0 24px 60px -28px rgba(15, 23, 42, .55);
+    }
+
+    .fusion-desc .fd-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(70% 70% at 50% 0%, #000 30%, transparent 100%);
+      -webkit-mask-image: radial-gradient(70% 70% at 50% 0%, #000 30%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .fusion-desc .fd-hero > * { position: relative; z-index: 1; }
+
+    .fusion-desc .fd-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #d8d4ff;
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .18);
+      padding: 7px 14px;
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+    }
+
+    .fusion-desc .fd-badge .fd-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--f-accent-2);
+      box-shadow: 0 0 0 4px rgba(34, 211, 238, .22);
+    }
+
+    .fusion-desc .fd-title {
+      margin: 20px 0 10px;
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .fusion-desc .fd-title span {
+      background: linear-gradient(100deg, #a78bfa, #22d3ee);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .fusion-desc .fd-sub {
+      margin: 0;
+      max-width: 620px;
+      font-size: 17px;
+      color: #c3c9dd;
+    }
+
+    .fusion-desc .fd-author {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 24px;
+      padding: 8px 16px 8px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .14);
+      font-size: 14px;
+      color: #e7e9f5;
+    }
+
+    .fusion-desc .fd-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0b1220;
+      background: linear-gradient(135deg, #a78bfa, #22d3ee);
+    }
+
+    .fusion-desc .fd-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 26px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fusion-desc .fd-chips li {
+      font-size: 13px;
+      font-weight: 500;
+      color: #d7dbf0;
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .13);
+      border-radius: 999px;
+      padding: 6px 13px;
+    }
+
+    /* ---------- SECTION HEADS ---------- */
+    .fusion-desc .fd-section { margin-top: 52px; }
+
+    .fusion-desc .fd-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--f-accent);
+      margin-bottom: 8px;
+    }
+
+    .fusion-desc .fd-h2 {
+      margin: 0 0 6px;
+      font-size: clamp(21px, 3vw, 27px);
+      font-weight: 750;
+      letter-spacing: -.015em;
+      color: var(--f-ink);
+    }
+
+    .fusion-desc .fd-lead {
+      margin: 0 0 26px;
+      color: var(--f-ink-soft);
+      font-size: 15.5px;
+      max-width: 660px;
+    }
+
+    /* ---------- FEATURE CARDS ---------- */
+    .fusion-desc .fd-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+      gap: 18px;
+    }
+
+    .fusion-desc .fd-card {
+      position: relative;
+      background: var(--f-surface);
+      border: 1px solid var(--f-line);
+      border-radius: 18px;
+      padding: 24px 22px 22px;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .fusion-desc .fd-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      border-radius: 18px 18px 0 0;
+      background: linear-gradient(90deg, var(--f-accent), var(--f-accent-2));
+      opacity: 0;
+      transition: opacity .22s ease;
+    }
+
+    .fusion-desc .fd-card:hover {
+      transform: translateY(-4px);
+      border-color: #d9d5ff;
+      box-shadow: 0 18px 38px -20px rgba(76, 61, 180, .38);
+    }
+
+    .fusion-desc .fd-card:hover::before { opacity: 1; }
+
+    .fusion-desc .fd-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      color: var(--f-accent);
+      background: linear-gradient(140deg, #f1eeff, #e8f7fb);
+      border: 1px solid #e7e3ff;
+    }
+
+    .fusion-desc .fd-icon svg {
+      width: 23px;
+      height: 23px;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fusion-desc .fd-card h3 {
+      margin: 0 0 8px;
+      font-size: 16.5px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      color: var(--f-ink);
+    }
+
+    .fusion-desc .fd-card p {
+      margin: 0;
+      font-size: 14.6px;
+      color: var(--f-muted);
+      line-height: 1.65;
+    }
+
+    /* ---------- SCREENSHOTS ---------- */
+    .fusion-desc .fd-shots {
+      display: grid;
+      gap: 26px;
+    }
+
+    .fusion-desc .fd-shot {
+      background: var(--f-surface);
+      border: 1px solid var(--f-line);
+      border-radius: 18px;
+      padding: 12px;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+    .fusion-desc .fd-shot:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 44px -24px rgba(15, 23, 42, .38);
+    }
+
+    .fusion-desc .fd-shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 11px;
+      border: 1px solid #eef0f6;
+      background: #f2f4f9;
+    }
+
+    .fusion-desc .fd-caption {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 8px 5px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--f-ink-soft);
+    }
+
+    .fusion-desc .fd-caption .fd-num {
+      flex: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, var(--f-accent), #5b8cff);
+    }
+
+    /* ---------- CTA STRIP ---------- */
+    .fusion-desc .fd-cta {
+      margin-top: 52px;
+      border-radius: 20px;
+      padding: 30px 30px;
+      background: linear-gradient(120deg, #12173a, #2b2168 60%, #3a2b7a);
+      color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      box-shadow: 0 20px 48px -26px rgba(43, 33, 104, .7);
+    }
+
+    .fusion-desc .fd-cta h3 {
+      margin: 0 0 4px;
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: -.01em;
+    }
+
+    .fusion-desc .fd-cta p {
+      margin: 0;
+      font-size: 14.5px;
+      color: #c5c9e4;
+    }
+
+    .fusion-desc .fd-cta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .fusion-desc .fd-cta-tags span {
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 999px;
+      color: #e9e7ff;
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .16);
+    }
+
+    @media (max-width: 640px) {
+      .fusion-desc { padding: 16px 12px 40px; }
+      .fusion-desc .fd-hero { padding: 32px 22px 30px; border-radius: 18px; }
+      .fusion-desc .fd-cta { padding: 24px 22px; }
+      .fusion-desc .fd-section { margin-top: 40px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fusion-desc .fd-card,
+      .fusion-desc .fd-shot { transition: none; }
+    }
+  </style>
+
+  <!-- ================= HERO ================= -->
+  <header class="fd-hero">
+    <span class="fd-badge"><i class="fd-dot"></i> Odoo 19 · Backend Theme</span>
+
+    <h1 class="fd-title">Fusion <span>Theme Pro</span></h1>
+    <p class="fd-sub">
+      A modern, interactive backend theme that makes Odoo feel lighter, faster and
+      genuinely pleasant to work in — every day.
+    </p>
+
+    <div class="fd-author">
+      <span class="fd-avatar">RH</span>
+      Crafted by <strong>Raihan Hridoy</strong>
+    </div>
+
+    <ul class="fd-chips">
+      <li>Light · Dark · Auto</li>
+      <li>7 accent colors</li>
+      <li>Keyboard navigation</li>
+      <li>Compact density</li>
+    </ul>
+  </header>
+
+  <!-- ================= FEATURES ================= -->
+  <section class="fd-section">
+    <span class="fd-eyebrow">What's inside</span>
+    <h2 class="fd-h2">Everything you need, nothing you don't</h2>
+    <p class="fd-lead">
+      Six focused improvements that touch the parts of Odoo you use the most —
+      the sidebar, menus, forms and lists.
+    </p>
+
+    <div class="fd-grid">
+      <!-- 1 -->
+      <article class="fd-card">
+        <div class="fd-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2.5" />
+            <line x1="9" y1="3" x2="9" y2="21" />
+            <line x1="12.5" y1="8" x2="17.5" y2="8" />
+            <line x1="12.5" y1="12" x2="17.5" y2="12" />
+          </svg>
+        </div>
+        <h3>Apps sidebar</h3>
+        <p>
+          A collapsible rail with instant search, pinned apps and full keyboard
+          navigation. The active app is lit up — everything else stays quietly in
+          the background.
+        </p>
+      </article>
+
+      <!-- 2 -->
+      <article class="fd-card">
+        <div class="fd-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 17v5" />
+            <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z" />
+          </svg>
+        </div>
+        <h3>Pin &amp; hide apps</h3>
+        <p>
+          Pin your favorites to the top for one-click access. Hide the apps you
+          never open — they collect under a tidy "Hidden apps" list at the bottom
+          and return with a single click.
+        </p>
+      </article>
+
+      <!-- 3 -->
+      <article class="fd-card">
+        <div class="fd-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="7.5" height="7.5" rx="1.6" />
+            <rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6" />
+            <rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6" />
+            <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6" />
+          </svg>
+        </div>
+        <h3>Menu icon styles</h3>
+        <p>
+          Keep the original Odoo icons, or switch to crisp outline icons, colorful
+          tiles or a text-only layout — straight from Settings.
+        </p>
+      </article>
+
+      <!-- 4 -->
+      <article class="fd-card">
+        <div class="fd-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="5" y="4" width="14" height="17" rx="2.2" />
+            <path d="M9 4h6v3H9z" />
+            <line x1="9" y1="12" x2="15" y2="12" />
+            <line x1="9" y1="16" x2="13" y2="16" />
+          </svg>
+        </div>
+        <h3>Form states</h3>
+        <p>
+          A stage stepper shows completed, current and upcoming stages at a glance.
+          Editable records get an accent edge, while required, invalid and focused
+          fields each have clear, unmistakable states.
+        </p>
+      </article>
+
+      <!-- 5 -->
+      <article class="fd-card">
+        <div class="fd-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="8.5" y1="6" x2="21" y2="6" />
+            <line x1="8.5" y1="12" x2="21" y2="12" />
+            <line x1="8.5" y1="18" x2="21" y2="18" />
+            <circle cx="4" cy="6" r="1.4" />
+            <circle cx="4" cy="12" r="1.4" />
+            <circle cx="4" cy="18" r="1.4" />
+          </svg>
+        </div>
+        <h3>List view</h3>
+        <p>
+          Calm headers, refined hover and selection states with an accent bar,
+          inline-edit highlighting, grouped rows and a comfortable compact density.
+        </p>
+      </article>
+
+      <!-- 6 -->
+      <article class="fd-card">
+        <div class="fd-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 21v-6.5M4 10.5V3M12 21v-9M12 8V3M20 21v-4.5M20 12.5V3" />
+            <path d="M1.5 14.5h5M9.5 8h5M17.5 16.5h5" />
+          </svg>
+        </div>
+        <h3>Make it yours</h3>
+        <p>
+          Open the appearance panel in the top bar: light, dark or auto mode, seven
+          accent colors, density and corner style. Administrators can lock in
+          company defaults for everyone.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= SCREENSHOTS ================= -->
+  <section class="fd-section">
+    <span class="fd-eyebrow">Gallery</span>
+    <h2 class="fd-h2">See it in action</h2>
+    <p class="fd-lead">
+      A quick tour of the theme across the sidebar, forms, lists and the
+      appearance panel.
+    </p>
+
+    <div class="fd-shots">
+      <figure class="fd-shot">
+        <img src="./Screenshot from 1.png" alt="Fusion Theme Pro — apps sidebar and main dashboard" height="600px" width="1200px"/>
+        <figcaption class="fd-caption"><span class="fd-num">1</span> Apps sidebar &amp; dashboard</figcaption>
+      </figure>
+
+      <figure class="fd-shot">
+        <img src="./Screenshot from 2.png" alt="Fusion Theme Pro — pinned and hidden apps" height="600px" width="1200px"/>
+        <figcaption class="fd-caption"><span class="fd-num">2</span> Pinned &amp; hidden apps</figcaption>
+      </figure>
+
+      <figure class="fd-shot">
+        <img src="./Screenshot from 3.png" alt="Fusion Theme Pro — menu icon styles" height="600px" width="1200px"/>
+        <figcaption class="fd-caption"><span class="fd-num">3</span> Menu icon styles</figcaption>
+      </figure>
+
+      <figure class="fd-shot">
+        <img src="./Screenshot from 4.png" alt="Fusion Theme Pro — form view with stage stepper" height="600px" width="1200px"/>
+        <figcaption class="fd-caption"><span class="fd-num">4</span> Form view &amp; stage stepper</figcaption>
+      </figure>
+
+      <figure class="fd-shot">
+        <img src="./Screenshot from 5.png" alt="Fusion Theme Pro — list view styling" height="600px" width="1200px"/>
+        <figcaption class="fd-caption"><span class="fd-num">5</span> List view &amp; selection states</figcaption>
+      </figure>
+
+      <figure class="fd-shot">
+        <img src="./Screenshot from 6.png" alt="Fusion Theme Pro — appearance panel" height="600px" width="1200px"/>
+        <figcaption class="fd-caption"><span class="fd-num">6</span> Appearance panel</figcaption>
+      </figure>
+
+      <figure class="fd-shot">
+        <img src="./Screenshot from 7.png" alt="Fusion Theme Pro — dark mode" height="600px" width="1200px"/>
+        <figcaption class="fd-caption"><span class="fd-num">7</span> Dark mode</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="fd-cta">
+    <div>
+      <h3>Ready to give your backend a fresh look?</h3>
+      <p>Install Fusion Theme Pro and pick your accent color in under a minute.</p>
+    </div>
+    <div class="fd-cta-tags">
+      <span>Odoo 19</span>
+      <span>Community &amp; Enterprise</span>
+      <span>No core patches</span>
+    </div>
+  </section>
+</div>
